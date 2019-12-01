@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style type="text/css">
+    #container{
+        margin-top: 230px;
+        display:flex;
+        justify-content: center;
+    }
+    .inp{
+        width:200px;
+        height:30px;
+        border:1px solid aqua;
+        color: grey;
+    }
+    .button{
+        width:25px;
+        height:30px;
+        border:1px solid aqua;
+    }
+    </style>
+<body>
+    <div id="container">
+            <input type="text" class="input"/>
+            <button class="btn">搜索<tton>
+            <ul id="demo"></ul>
+    </div>
+    <script>
+        const API='https://music.niubishanshan.top/api/v2/music/search/'
+        const input=document.querySelector('.input')
+        const btn=document.querySelector('.btn')
+        const demo=document.querySelector('.demo')
+
+                
+        btn.addEventListener('click',()=>{
+            var req;
+                if (window.XMLHttpRequest){
+                    req = new XMLHttpRequest();
+                }else{
+                    req = new ActiveXObj("Microsoft.XMLHTTP");
+                }
+            const keyword=input.value
+            req.open('GET',API+keyword);
+            req.onreadystatechange = function() {
+                if (req.readyState === 4) {
+                    if(req.status>=200 && req.status<300 || req.status==304){
+                        const json = JSON.parse(req.responseText);
+                        console.log(json['data']['songList'][0]['songName'])
+                    }else{
+                        console.log('请求错误')
+                    };
+                };
+            };
+            req.send();
+        });
+            
+    </script>
+</body>
+<ml>
